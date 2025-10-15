@@ -1,9 +1,9 @@
 package com.huntercodexs.image.processor;
 
+import com.huntercodexs.image.processor.enumerator.ImageType;
+import com.huntercodexs.image.processor.resource.ImageDimension;
+import com.huntercodexs.image.processor.resource.ImageFileWriter;
 import lombok.Generated;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,21 +31,20 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Slf4j
+import static com.huntercodexs.image.processor.constants.ImageProcessorConstants.ITERATION_COUNT;
+import static com.huntercodexs.image.processor.constants.ImageProcessorConstants.KEY_LENGTH;
+
 @Service
 public class ImageProcessor {
 
     @Generated
     private static final Logger log = LoggerFactory.getLogger(ImageProcessor.class);
 
-    private static final int KEY_LENGTH = 256;
-    private static final int ITERATION_COUNT = 65536;
-
-    public static String imageByteSizeCalculate(long bytesLength) {
+    public String imageByteSizeCalculate(long bytesLength) {
         return calculateBytes(bytesLength);
     }
 
-    public static boolean isAnAcceptedImage(String imageType) {
+    public boolean isAnAcceptedImage(String imageType) {
         for (ImageType type : ImageType.values()) {
             if (imageType.toUpperCase().equals(type.name()) && type.isAccepted()) {
                 return true;
@@ -54,7 +53,7 @@ public class ImageProcessor {
         return false;
     }
 
-    public static boolean isAnImage(byte[] image) {
+    public boolean isAnImage(byte[] image) {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(new ByteArrayInputStream(image));
@@ -64,21 +63,21 @@ public class ImageProcessor {
         }
     }
 
-    public static String imageType(byte[] image) {
+    public String imageType(byte[] image) {
         String imageInfo = new String(image).substring(0, 255);
         String imageInfo4 = new String(image).substring(0, 4);
         String imageInfo15 = new String(image).substring(6, 10);
         return imageTypeCheck(imageInfo, imageInfo4, imageInfo15);
     }
 
-    public static String imageType(String binaryImage) {
+    public String imageType(String binaryImage) {
         String imageInfo = binaryImage.substring(0, 255);
         String imageInfo4 = binaryImage.substring(0, 4);
         String imageInfo15 = binaryImage.substring(6, 10);
         return imageTypeCheck(imageInfo, imageInfo4, imageInfo15);
     }
 
-    public static String imageFormat(byte[] image) throws IOException {
+    public String imageFormat(byte[] image) throws IOException {
         ImageInputStream iis = ImageIO.createImageInputStream(new ByteArrayInputStream(image));
         Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
         while (imageReaders.hasNext()) {
@@ -91,7 +90,7 @@ public class ImageProcessor {
         return "UNKNOWN";
     }
 
-    public static Dimension imageDimension(byte[] image) throws IOException {
+    public ImageDimension imageDimension(byte[] image) throws IOException {
         ImageInputStream iis = ImageIO.createImageInputStream(new ByteArrayInputStream(image));
         Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
         while (imageReaders.hasNext()) {
@@ -100,16 +99,16 @@ public class ImageProcessor {
                 reader.setInput(iis);
                 int width = reader.getWidth(reader.getMinIndex());
                 int height = reader.getHeight(reader.getMinIndex());
-                return new Dimension(width, height);
+                return new ImageDimension(width, height);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
             }
         }
-        return new Dimension(0, 0);
+        return new ImageDimension(0, 0);
     }
 
-    public static String imageSize(byte[] image) {
+    public String imageSize(byte[] image) {
 
         if (!isAnImage(image)) {
             throw new RuntimeException("Invalid Image File");
@@ -130,15 +129,15 @@ public class ImageProcessor {
         return "0.00KB";
     }
 
-    public static String imageEncode(byte[] image) {
+    public String imageEncode(byte[] image) {
         return new String(Base64.getEncoder().encode(image));
     }
 
-    public static String imageDecode(String encodedImage) {
+    public String imageDecode(String encodedImage) {
         return new String(Base64.getDecoder().decode(encodedImage));
     }
 
-    public static String imageEncrypted(byte[] image, String secretKey, String salt) {
+    public String imageEncrypted(byte[] image, String secretKey, String salt) {
         log.debug("Working on Image Encryption");
 
         long start = Calendar.getInstance().getTimeInMillis();
@@ -154,7 +153,7 @@ public class ImageProcessor {
         return String.valueOf(imageEncrypted);
     }
 
-    public static String imageDecrypted(String base64ImageToDecrypt, String secretKey, String salt) {
+    public String imageDecrypted(String base64ImageToDecrypt, String secretKey, String salt) {
         log.debug("Working on Image Decryption");
 
         long start = Calendar.getInstance().getTimeInMillis();
@@ -168,7 +167,7 @@ public class ImageProcessor {
         return String.valueOf(imageDecrypted);
     }
 
-    public static List<List<String>> imageToMatrix(byte[] image, int matrixSize) {
+    public List<List<String>> imageToMatrix(byte[] image, int matrixSize) {
         if (matrixSize <= 1) {
             return null;
         }
@@ -196,7 +195,7 @@ public class ImageProcessor {
         return imageMatrix;
     }
 
-    public static String imageFromMatrix(List<List<String>> imageMatrix) {
+    public String imageFromMatrix(List<List<String>> imageMatrix) {
 
         StringBuilder stringBuilder = new StringBuilder();
         int matrixSize = imageMatrix.size();
@@ -215,7 +214,7 @@ public class ImageProcessor {
         return String.valueOf(stringBuilder);
     }
 
-    public static boolean imageBse64Save(String filenamePath, byte[] image) {
+    public boolean imageBse64Save(String filenamePath, byte[] image) {
         try {
             ImageFileWriter imageFileWriter = new ImageFileWriter();
             imageFileWriter.fileCreate(filenamePath);
@@ -227,7 +226,7 @@ public class ImageProcessor {
         }
     }
 
-    public static boolean imageCopy(String imageSource, String dataDestiny) {
+    public boolean imageCopy(String imageSource, String dataDestiny) {
         try {
             byte[] origin = byteFile(imageSource);
             String imageType = imageType(origin);
@@ -247,7 +246,7 @@ public class ImageProcessor {
         }
     }
 
-    public static String imageFragment(byte[] image, String pathToSaveFragments) {
+    public String imageFragment(byte[] image, String pathToSaveFragments) {
         Date date = new Date();
 
         String imageType = imageType(image).toLowerCase();
@@ -288,7 +287,7 @@ public class ImageProcessor {
         return folderName;
     }
 
-    public static String imageFragmentRevert(String pathToGetFragments) {
+    public String imageFragmentRevert(String pathToGetFragments) {
 
         String point = "";
         if (pathToGetFragments.startsWith(".")) {
@@ -323,7 +322,7 @@ public class ImageProcessor {
         return String.valueOf(stringBuilder);
     }
 
-    public static byte[] imageFlipX(byte[] image) {
+    public byte[] imageFlipX(byte[] image) {
         try {
 
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
@@ -353,7 +352,7 @@ public class ImageProcessor {
         }
     }
 
-    public static byte[] imageFlipY(byte[] image) {
+    public byte[] imageFlipY(byte[] image) {
         try {
 
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
@@ -383,7 +382,7 @@ public class ImageProcessor {
         }
     }
 
-    public static byte[] imageRotate(byte[] image) {
+    public byte[] imageRotate(byte[] image) {
         try {
 
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
@@ -414,7 +413,7 @@ public class ImageProcessor {
         }
     }
 
-    public static byte[] imageResize(byte[] image, int width, int height) {
+    public byte[] imageResize(byte[] image, int width, int height) {
         try {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
             BufferedImage originalImage = ImageIO.read(imageStream);
@@ -434,7 +433,7 @@ public class ImageProcessor {
         }
     }
 
-    public static byte[] imageCrop(byte[] image, int xAxis, int yAxis, int cropWidth, int cropHeight) {
+    public byte[] imageCrop(byte[] image, int xAxis, int yAxis, int cropWidth, int cropHeight) {
         try {
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
             BufferedImage originalImage = ImageIO.read(imageStream);
@@ -451,91 +450,6 @@ public class ImageProcessor {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @Getter
-    @Setter
-    public static class Dimension {
-        int width;
-        int height;
-
-        public Dimension(int width, int height) {
-            this.width = width;
-            this.height = height;
-        }
-    }
-
-    @Getter
-    @Setter
-    public static class ImageFileWriter {
-
-        public BufferedWriter bufferedWriter;
-
-        public boolean folderCreate(String path) {
-            try {
-
-                File file = new File(path);
-
-                if (file.mkdirs()) {
-                    return true;
-                }
-
-            } catch (Exception ex) {
-                throw new RuntimeException("[EXCEPTION] Folder not created: " + ex.getMessage());
-            }
-
-            System.out.println("[ERROR] Folder not created: " + path);
-            return false;
-        }
-
-        public void fileCreate(String filepath) throws FileNotFoundException {
-            File file = new File(filepath);
-
-            if (file.exists()) {
-                if (!file.delete()) {
-                    System.out.println("ERROR: File Not deleted: " + filepath);
-                }
-            }
-
-            OutputStream os = new FileOutputStream(filepath, true);
-            Writer wr = new OutputStreamWriter(os);
-            this.bufferedWriter = new BufferedWriter(wr);
-        }
-
-        public void fileWrite(String data) {
-            try {
-                this.bufferedWriter.write(data);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public void fileClose() throws IOException {
-            this.bufferedWriter.close();
-        }
-    }
-
-    @Getter
-    public enum ImageType {
-        BMP(true, "Bitmap"),
-        GIF(true, "Graphics Interchange Format"),
-        PNG(true, "Portable Network Graphics"),
-        JPEG(true, "Joint Photographic Experts Group"),
-        JPG(true, "Joint Photographic Experts Group"),
-        TIFF(false, "Tag Image File Format"),
-        PSD(false, "Photoshop Document"),
-        SVG(false, "Scalable Vector Graphics"),
-        WEBP(false, "WEBP"),
-        NEF(false, "Nikon Electronic Format"),
-        PDF(false, "Portable Document Format");
-
-        final boolean accepted;
-        final String description;
-
-        ImageType(boolean accepted, String description) {
-            this.accepted = accepted;
-            this.description = description;
         }
     }
 

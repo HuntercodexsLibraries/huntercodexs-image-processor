@@ -1,69 +1,74 @@
 package com.huntercodexs.image.processor;
 
+import com.huntercodexs.image.processor.resource.ImageDimension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.util.List;
 
 import static com.huntercodexs.image.processor.DataBuilder.*;
-import static com.huntercodexs.image.processor.ImageProcessor.*;
-import static com.huntercodexs.image.processor.ImageProcessor.ImageType.*;
+import static com.huntercodexs.image.processor.enumerator.ImageType.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 @ExtendWith(MockitoExtension.class)
 class ImageProcessorTests {
 
+    @InjectMocks
+    ImageProcessor imageProcessor;
+
     @BeforeEach
     void setUp() {
         openMocks(this);
+        imageProcessor = new ImageProcessor();
     }
 
     @Test
     public void isAcceptedTest() {
-        assertTrue(isAnAcceptedImage("bmp"));
-        assertTrue(isAnAcceptedImage("gif"));
-        assertTrue(isAnAcceptedImage("png"));
-        assertTrue(isAnAcceptedImage("jpeg"));
-        assertTrue(isAnAcceptedImage("jpg"));
-        assertFalse(isAnAcceptedImage("tiff"));
-        assertFalse(isAnAcceptedImage("psd"));
-        assertFalse(isAnAcceptedImage("svg"));
-        assertFalse(isAnAcceptedImage("webp"));
-        assertFalse(isAnAcceptedImage("nef"));
-        assertFalse(isAnAcceptedImage("pdf"));
-        assertTrue(isAnAcceptedImage("BMP"));
-        assertTrue(isAnAcceptedImage("GIF"));
-        assertTrue(isAnAcceptedImage("PNG"));
-        assertTrue(isAnAcceptedImage("JPEG"));
-        assertTrue(isAnAcceptedImage("JPG"));
-        assertFalse(isAnAcceptedImage("TIFF"));
-        assertFalse(isAnAcceptedImage("PSD"));
-        assertFalse(isAnAcceptedImage("SVG"));
-        assertFalse(isAnAcceptedImage("WEBP"));
-        assertFalse(isAnAcceptedImage("NEF"));
-        assertFalse(isAnAcceptedImage("PDF"));
+        assertTrue(imageProcessor.isAnAcceptedImage("bmp"));
+        assertTrue(imageProcessor.isAnAcceptedImage("gif"));
+        assertTrue(imageProcessor.isAnAcceptedImage("png"));
+        assertTrue(imageProcessor.isAnAcceptedImage("jpeg"));
+        assertTrue(imageProcessor.isAnAcceptedImage("jpg"));
+        assertFalse(imageProcessor.isAnAcceptedImage("tiff"));
+        assertFalse(imageProcessor.isAnAcceptedImage("psd"));
+        assertFalse(imageProcessor.isAnAcceptedImage("svg"));
+        assertFalse(imageProcessor.isAnAcceptedImage("webp"));
+        assertFalse(imageProcessor.isAnAcceptedImage("nef"));
+        assertFalse(imageProcessor.isAnAcceptedImage("pdf"));
+        assertTrue(imageProcessor.isAnAcceptedImage("BMP"));
+        assertTrue(imageProcessor.isAnAcceptedImage("GIF"));
+        assertTrue(imageProcessor.isAnAcceptedImage("PNG"));
+        assertTrue(imageProcessor.isAnAcceptedImage("JPEG"));
+        assertTrue(imageProcessor.isAnAcceptedImage("JPG"));
+        assertFalse(imageProcessor.isAnAcceptedImage("TIFF"));
+        assertFalse(imageProcessor.isAnAcceptedImage("PSD"));
+        assertFalse(imageProcessor.isAnAcceptedImage("SVG"));
+        assertFalse(imageProcessor.isAnAcceptedImage("WEBP"));
+        assertFalse(imageProcessor.isAnAcceptedImage("NEF"));
+        assertFalse(imageProcessor.isAnAcceptedImage("PDF"));
     }
 
     @Test
     public void isImageTest() throws IOException {
-        boolean bmpResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp"));
-        boolean gifResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif"));
-        boolean pngResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png"));
-        boolean jpeg1Result = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg"));
-        boolean jpeg2Result = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg"));
-        boolean jpeg3Result = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg"));
-        boolean jpg1Result = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg"));
-        boolean jpg2Result = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg"));
-        boolean tiffResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff"));
-        boolean psdResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/7-psd/file.psd"));
-        boolean svgResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/8-svg/file.svg"));
-        boolean webpResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/9-webp/file.webp"));
-        boolean nefResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF"));
-        boolean pdfResult = isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf"));
+        boolean bmpResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp"));
+        boolean gifResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif"));
+        boolean pngResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png"));
+        boolean jpeg1Result = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg"));
+        boolean jpeg2Result = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg"));
+        boolean jpeg3Result = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg"));
+        boolean jpg1Result = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg"));
+        boolean jpg2Result = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg"));
+        boolean tiffResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff"));
+        boolean psdResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/7-psd/file.psd"));
+        boolean svgResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/8-svg/file.svg"));
+        boolean webpResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/9-webp/file.webp"));
+        boolean nefResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF"));
+        boolean pdfResult = imageProcessor.isAnImage(fileToByte(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf"));
 
         assertTrue(bmpResult);
         assertTrue(gifResult);
@@ -84,221 +89,221 @@ class ImageProcessorTests {
     @Test
     public void imageTypeTest() throws IOException {
 
-        assertEquals(BMP.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
+        assertEquals(BMP.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
 
-        assertEquals(GIF.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
+        assertEquals(GIF.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
 
-        assertEquals(PNG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
+        assertEquals(PNG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
 
-        assertEquals(JPEG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
 
-        assertEquals(JPG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg")));
+        assertEquals(JPG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg")));
 
-        assertEquals(TIFF.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff")));
+        assertEquals(TIFF.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff")));
 
-        assertEquals(PSD.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/7-psd/file.psd")));
+        assertEquals(PSD.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/7-psd/file.psd")));
 
-        assertEquals(SVG.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/8-svg/file.svg")));
+        assertEquals(SVG.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/8-svg/file.svg")));
 
-        assertEquals(WEBP.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/9-webp/file.webp")));
+        assertEquals(WEBP.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/9-webp/file.webp")));
 
-        assertEquals(NEF.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF")));
+        assertEquals(NEF.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF")));
 
-        assertEquals(PDF.name(), imageType(fileToByte(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf")));
+        assertEquals(PDF.name(), imageProcessor.imageType(fileToByte(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf")));
 
     }
 
     @Test
     public void imageTypeBinaryTest() throws IOException {
 
-        assertEquals(BMP.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
+        assertEquals(BMP.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
 
-        assertEquals(GIF.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
+        assertEquals(GIF.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
 
-        assertEquals(PNG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
+        assertEquals(PNG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
 
-        assertEquals(JPEG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
 
-        assertEquals(JPEG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
+        assertEquals(JPEG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
 
-        assertEquals(JPG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg")));
+        assertEquals(JPG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/5-jpg/file2.jpg")));
 
-        assertEquals(TIFF.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff")));
+        assertEquals(TIFF.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/6-tiff/file.tiff")));
 
-        assertEquals(PSD.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/7-psd/file.psd")));
+        assertEquals(PSD.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/7-psd/file.psd")));
 
-        assertEquals(SVG.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/8-svg/file.svg")));
+        assertEquals(SVG.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/8-svg/file.svg")));
 
-        assertEquals(WEBP.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/9-webp/file.webp")));
+        assertEquals(WEBP.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/9-webp/file.webp")));
 
-        assertEquals(NEF.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF")));
+        assertEquals(NEF.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/10-nef/file.NEF")));
 
-        assertEquals(PDF.name(), imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf")));
+        assertEquals(PDF.name(), imageProcessor.imageType(fileToBinary(PATH_TO_IMAGES_TEST +"/11-pdf/file.pdf")));
 
     }
 
     @Test
     public void imageFormatTest() throws IOException {
 
-        assertEquals(BMP.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp")));
+        assertEquals(BMP.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp")));
 
-        assertEquals(GIF.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif")));
+        assertEquals(GIF.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif")));
 
-        assertEquals(PNG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png")));
+        assertEquals(PNG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png")));
 
-        assertEquals(JPEG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file1.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file1.jpeg")));
 
-        assertEquals(JPEG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file2.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file2.jpeg")));
 
-        assertEquals(JPEG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file3.jpeg")));
+        assertEquals(JPEG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/4-jpeg/file3.jpeg")));
 
-        assertEquals(JPEG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg")));
+        assertEquals(JPEG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg")));
 
-        assertEquals(JPEG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file2.jpg")));
+        assertEquals(JPEG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file2.jpg")));
 
-        //assertEquals(TIFF.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/6-tiff/file.tiff")));
-        assertEquals("TIF", imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/6-tiff/file.tiff")));
+        //assertEquals(TIFF.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/6-tiff/file.tiff")));
+        assertEquals("TIF", imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/6-tiff/file.tiff")));
 
-        //assertEquals(PSD.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/7-psd/file.psd")));
+        //assertEquals(PSD.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/7-psd/file.psd")));
 
-        //assertEquals(SVG.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/8-svg/file.svg")));
+        //assertEquals(SVG.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/8-svg/file.svg")));
 
-        //assertEquals(WEBP.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/9-webp/file.webp")));
+        //assertEquals(WEBP.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/9-webp/file.webp")));
 
-        //assertEquals(NEF.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/10-nef/file.NEF")));
+        //assertEquals(NEF.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/10-nef/file.NEF")));
 
-        //assertEquals(PDF.name(), imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/11-pdf/file.pdf")));
+        //assertEquals(PDF.name(), imageProcessor.imageFormat(fileToByte(PATH_TO_IMAGES_TEST + "/11-pdf/file.pdf")));
 
     }
 
     @Test
     public void imageDimensionTest() throws IOException {
-        Dimension dimensionBmp = imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp"));
-        assertEquals("1419x1001", dimensionBmp.getWidth()+"x"+dimensionBmp.getHeight());
+        ImageDimension imageDimensionBmp = imageProcessor.imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp"));
+        assertEquals("1419x1001", imageDimensionBmp.getWidth()+"x"+ imageDimensionBmp.getHeight());
 
-        Dimension dimensionGif = imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif"));
-        assertEquals("320x320", dimensionGif.getWidth()+"x"+dimensionGif.getHeight());
+        ImageDimension imageDimensionGif = imageProcessor.imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif"));
+        assertEquals("320x320", imageDimensionGif.getWidth()+"x"+ imageDimensionGif.getHeight());
 
-        Dimension dimensionPng = imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png"));
-        assertEquals("512x205", dimensionPng.getWidth()+"x"+dimensionPng.getHeight());
+        ImageDimension imageDimensionPng = imageProcessor.imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png"));
+        assertEquals("512x205", imageDimensionPng.getWidth()+"x"+ imageDimensionPng.getHeight());
 
-        Dimension dimensionJpeg = imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg"));
-        assertEquals("273x184", dimensionJpeg.getWidth()+"x"+dimensionJpeg.getHeight());
+        ImageDimension imageDimensionJpeg = imageProcessor.imageDimension(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg"));
+        assertEquals("273x184", imageDimensionJpeg.getWidth()+"x"+ imageDimensionJpeg.getHeight());
     }
 
     @Test
     public void imageByteSizeCalculateTest() {
-        assertEquals("1byte", imageByteSizeCalculate(1));
-        assertEquals("500bytes", imageByteSizeCalculate(500));
-        assertEquals("897bytes", imageByteSizeCalculate(897));
-        assertEquals("1023bytes", imageByteSizeCalculate(1023));
-        assertEquals("1.0KB", imageByteSizeCalculate(1024));
+        assertEquals("1byte", imageProcessor.imageByteSizeCalculate(1));
+        assertEquals("500bytes", imageProcessor.imageByteSizeCalculate(500));
+        assertEquals("897bytes", imageProcessor.imageByteSizeCalculate(897));
+        assertEquals("1023bytes", imageProcessor.imageByteSizeCalculate(1023));
+        assertEquals("1.0KB", imageProcessor.imageByteSizeCalculate(1024));
     }
 
     @Test
     public void simulateCalculateKilobytesTest() {
-        assertEquals("107.12KB", imageByteSizeCalculate(109693));
-        assertEquals("1.0KB", imageByteSizeCalculate(1024));
-        assertEquals("1.97KB", imageByteSizeCalculate(2024));
-        assertEquals("2.0KB", imageByteSizeCalculate(2048));
-        assertEquals("21.50KB", imageByteSizeCalculate(22024));
-        assertEquals("705.10KB", imageByteSizeCalculate(722024));
-        assertEquals("900.41KB", imageByteSizeCalculate(922024));
-        assertEquals("999.02KB", imageByteSizeCalculate(1023000));
-        assertEquals("999.78KB", imageByteSizeCalculate(1023780));
-        assertEquals("0.97MB", imageByteSizeCalculate(1024000));
+        assertEquals("107.12KB", imageProcessor.imageByteSizeCalculate(109693));
+        assertEquals("1.0KB", imageProcessor.imageByteSizeCalculate(1024));
+        assertEquals("1.97KB", imageProcessor.imageByteSizeCalculate(2024));
+        assertEquals("2.0KB", imageProcessor.imageByteSizeCalculate(2048));
+        assertEquals("21.50KB", imageProcessor.imageByteSizeCalculate(22024));
+        assertEquals("705.10KB", imageProcessor.imageByteSizeCalculate(722024));
+        assertEquals("900.41KB", imageProcessor.imageByteSizeCalculate(922024));
+        assertEquals("999.02KB", imageProcessor.imageByteSizeCalculate(1023000));
+        assertEquals("999.78KB", imageProcessor.imageByteSizeCalculate(1023780));
+        assertEquals("0.97MB", imageProcessor.imageByteSizeCalculate(1024000));
     }
 
     @Test
     public void simulateCalculateMegabytesTest() {
-        assertEquals("4.06MB", imageByteSizeCalculate(4264316));
-        assertEquals("20.29MB", imageByteSizeCalculate(21276657));
-        assertEquals("0.97MB", imageByteSizeCalculate(1024000));
-        assertEquals("1.95MB", imageByteSizeCalculate(2048000));
-        assertEquals("8.69MB", imageByteSizeCalculate(9122024));
-        assertEquals("86.99MB", imageByteSizeCalculate(91220244));
-        assertEquals("373.09MB", imageByteSizeCalculate(391220244));
-        assertEquals("0.95GB", imageByteSizeCalculate(1024000000));
+        assertEquals("4.06MB", imageProcessor.imageByteSizeCalculate(4264316));
+        assertEquals("20.29MB", imageProcessor.imageByteSizeCalculate(21276657));
+        assertEquals("0.97MB", imageProcessor.imageByteSizeCalculate(1024000));
+        assertEquals("1.95MB", imageProcessor.imageByteSizeCalculate(2048000));
+        assertEquals("8.69MB", imageProcessor.imageByteSizeCalculate(9122024));
+        assertEquals("86.99MB", imageProcessor.imageByteSizeCalculate(91220244));
+        assertEquals("373.09MB", imageProcessor.imageByteSizeCalculate(391220244));
+        assertEquals("0.95GB", imageProcessor.imageByteSizeCalculate(1024000000));
     }
 
     @Test
     public void simulateCalculateGigabytesTest() {
-        assertEquals("1.90GB", imageByteSizeCalculate(2048000000));
-        assertEquals("3.81GB", imageByteSizeCalculate(4096000000L));
-        assertEquals("7.12GB", imageByteSizeCalculate(7650000000L));
+        assertEquals("1.90GB", imageProcessor.imageByteSizeCalculate(2048000000));
+        assertEquals("3.81GB", imageProcessor.imageByteSizeCalculate(4096000000L));
+        assertEquals("7.12GB", imageProcessor.imageByteSizeCalculate(7650000000L));
     }
 
     @Test
     public void imageSizeTest() throws IOException {
         assertEquals(
                 "BMP  4.06MB",
-                "BMP  " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
+                "BMP  " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/1-bmp/file.bmp")));
         assertEquals(
                 "GIF  107.12KB",
-                "GIF  " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
+                "GIF  " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/2-gif/file.gif")));
         assertEquals(
                 "PNG  16.51KB",
-                "PNG  " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
+                "PNG  " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file.png")));
         assertEquals(
                 "PNG  20.29MB",
-                "PNG  " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file-sample-1.png")));
+                "PNG  " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/3-png/file-sample-1.png")));
         assertEquals(
                 "JPEG 22.31KB",
-                "JPEG " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
+                "JPEG " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file1.jpeg")));
         assertEquals(
                 "JPEG 9.15KB",
-                "JPEG " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
+                "JPEG " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file2.jpeg")));
         assertEquals(
                 "JPEG 143.29KB",
-                "JPEG " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
+                "JPEG " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/4-jpeg/file3.jpeg")));
         assertEquals(
                 "JPG 1.04MB",
-                "JPG " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file-sample-1.jpg")));
+                "JPG " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file-sample-1.jpg")));
         assertEquals(
                 "JPG 976.75KB",
-                "JPG " + imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file-sample-2.jpg")));
+                "JPG " + imageProcessor.imageSize(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file-sample-2.jpg")));
     }
 
     @Test
     public void imageEncodeTest() throws IOException {
-        assertEquals(IMAGE_ENCODED_TEST, imageEncode(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
+        assertEquals(IMAGE_ENCODED_TEST, imageProcessor.imageEncode(fileToByte(PATH_TO_IMAGES_TEST +"/5-jpg/file1.jpg")));
     }
 
     @Test
     public void imageDecodeTest() throws IOException {
-        assertNotNull(imageDecode(IMAGE_ENCODED_TEST));
+        assertNotNull(imageProcessor.imageDecode(IMAGE_ENCODED_TEST));
     }
 
     @Test
     public void imageEncryptedTest() throws IOException {
         String imgEnc;
-        imgEnc = imageEncrypted(
+        imgEnc = imageProcessor.imageEncrypted(
                 fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"),
                 SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgEnc = imageEncrypted(
+        imgEnc = imageProcessor.imageEncrypted(
                 fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"),
                 SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgEnc = imageEncrypted(
+        imgEnc = imageProcessor.imageEncrypted(
                 fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"),
                 SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgEnc = imageEncrypted(
+        imgEnc = imageProcessor.imageEncrypted(
                 fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"),
                 SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgEnc = imageEncrypted(
+        imgEnc = imageProcessor.imageEncrypted(
                 fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"),
                 SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
@@ -309,36 +314,36 @@ class ImageProcessorTests {
         String imgEnc;
         String imgDec;
 
-        imgEnc = imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), SECRET_KEY_TEST, SALT_TEST);
+        imgEnc = imageProcessor.imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgDec = imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
+        imgDec = imageProcessor.imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgDec);
 
-        imgEnc = imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), SECRET_KEY_TEST, SALT_TEST);
+        imgEnc = imageProcessor.imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgDec = imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
+        imgDec = imageProcessor.imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgDec);
 
-        imgEnc = imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), SECRET_KEY_TEST, SALT_TEST);
+        imgEnc = imageProcessor.imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgDec = imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
+        imgDec = imageProcessor.imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgDec);
 
-        imgEnc = imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), SECRET_KEY_TEST, SALT_TEST);
+        imgEnc = imageProcessor.imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgDec = imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
+        imgDec = imageProcessor.imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgDec);
 
-        imgEnc = imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), SECRET_KEY_TEST, SALT_TEST);
+        imgEnc = imageProcessor.imageEncrypted(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgEnc);
-        imgDec = imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
+        imgDec = imageProcessor.imageDecrypted(imgEnc, SECRET_KEY_TEST, SALT_TEST);
         assertNotNull(imgDec);
     }
 
     @Test
     public void imageToMatrixTest() throws IOException {
         List<List<String>> imageToMatrix;
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), 10);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), 10);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -346,7 +351,7 @@ class ImageProcessorTests {
         assertEquals(10, imageToMatrix.getLast().size());
         matrixPrinter(imageToMatrix, 3);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), 5);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -354,7 +359,7 @@ class ImageProcessorTests {
         assertEquals(5, imageToMatrix.getLast().size());
         matrixPrinter(imageToMatrix, 3);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), 5);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -362,7 +367,7 @@ class ImageProcessorTests {
         assertEquals(5, imageToMatrix.getLast().size());
         matrixPrinter(imageToMatrix, 3);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), 20);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), 20);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -370,7 +375,7 @@ class ImageProcessorTests {
         assertEquals(20, imageToMatrix.getLast().size());
         matrixPrinter(imageToMatrix, 3);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 5);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -378,7 +383,7 @@ class ImageProcessorTests {
         assertEquals(5, imageToMatrix.getLast().size());
         matrixPrinter(imageToMatrix, 3);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file-sample-1.jpg"), 10);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file-sample-1.jpg"), 10);
         assertNotNull(imageToMatrix);
         assertNotNull(imageToMatrix.getFirst());
         assertNotNull(imageToMatrix.getLast());
@@ -391,48 +396,61 @@ class ImageProcessorTests {
     @Test
     public void imageFromMatrixTest() throws IOException {
         List<List<String>> imageToMatrix;
+        String imageFromMatrix;
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), 10);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"), 10);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/2-gif/file.gif"), 5);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file.png"), 5);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), 20);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/3-png/file-sample-1.png"), 20);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 5);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 5);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
 
-        imageToMatrix = imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file-sample-1.jpg"), 10);
+        imageToMatrix = imageProcessor.imageToMatrix(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file-sample-1.jpg"), 10);
         assertNotNull(imageToMatrix);
+        imageFromMatrix = imageProcessor.imageFromMatrix(imageToMatrix);
+        assertNotNull(imageFromMatrix);
     }
 
     @Test
     public void imageBse64SaveTest() throws IOException {
-        assertTrue(imageBse64Save(
+        assertTrue(imageProcessor.imageBse64Save(
                 PATH_TO_TMP_TEST+"/5-jpg-file1.txt",
                 fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg")));
     }
 
     @Test
     public void imageCopyTest() throws IOException {
-        assertTrue(imageCopy(
+        assertTrue(imageProcessor.imageCopy(
                 PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg",
                 PATH_TO_TMP_TEST+"/5-jpg-file1.jpg"));
     }
 
     @Test
     public void imageFragmentTest() throws IOException {
-        assertTrue(imageFragment(
+        assertTrue(imageProcessor.imageFragment(
                 fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"),
                 PATH_TO_TMP_TEST
         ).matches("[0-9a-z]{32}_[a-z]{3,4}"));
 
-        assertTrue(imageFragment(
+        assertTrue(imageProcessor.imageFragment(
                 fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"),
                 PATH_TO_TMP_TEST
         ).matches("[0-9a-z]{32}_[a-z]{3,4}"));
@@ -443,8 +461,8 @@ class ImageProcessorTests {
 
         DataBuilder dataBuilder = new DataBuilder();
 
-        String generatedFolder = imageFragment(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), PATH_TO_TMP_TEST);
-        String revertedImage = imageFragmentRevert(PATH_TO_TMP_TEST + "/" + generatedFolder);
+        String generatedFolder = imageProcessor.imageFragment(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), PATH_TO_TMP_TEST);
+        String revertedImage = imageProcessor.imageFragmentRevert(PATH_TO_TMP_TEST + "/" + generatedFolder);
 
         dataBuilder.fileCreateBuffered(PATH_TO_TMP_TEST+"/"+generatedFolder+".txt");
         dataBuilder.fileWriteBuffered(revertedImage);
@@ -457,7 +475,7 @@ class ImageProcessorTests {
     @Test
     public void imageFlipXTest() throws IOException {
         String filePath = PATH_TO_TMP_TEST+"/file1-flip-x.jpg";
-        byte[] imageFlipXResult = imageFlipX(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
+        byte[] imageFlipXResult = imageProcessor.imageFlipX(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
         writeFile(imageFlipXResult, filePath);
         assertNotNull(imageFlipXResult);
     }
@@ -465,7 +483,7 @@ class ImageProcessorTests {
     @Test
     public void imageFlipYTest() throws IOException {
         String filePath = PATH_TO_TMP_TEST+"/file1-flip-y.jpg";
-        byte[] imageFlipYResult = imageFlipY(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
+        byte[] imageFlipYResult = imageProcessor.imageFlipY(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
         writeFile(imageFlipYResult, filePath);
         assertNotNull(imageFlipYResult);
     }
@@ -473,7 +491,7 @@ class ImageProcessorTests {
     @Test
     public void imageRotateTest() throws IOException {
         String filePath = PATH_TO_TMP_TEST+"/file1-rotate-180.jpg";
-        byte[] imageRotateResult = imageRotate(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
+        byte[] imageRotateResult = imageProcessor.imageRotate(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
         writeFile(imageRotateResult, filePath);
         assertNotNull(imageRotateResult);
     }
@@ -481,7 +499,7 @@ class ImageProcessorTests {
     @Test
     public void imageResizeTest() throws IOException {
         String filePath = PATH_TO_TMP_TEST+"/file1-resize.jpg";
-        byte[] imageResizeResult = imageResize(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 100, 65);
+        byte[] imageResizeResult = imageProcessor.imageResize(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"), 100, 65);
         writeFile(imageResizeResult, filePath);
         assertNotNull(imageResizeResult);
     }
@@ -489,7 +507,7 @@ class ImageProcessorTests {
     @Test
     public void imageCropTest() throws IOException {
         String filePath = PATH_TO_TMP_TEST+"/file-crop.bmp";
-        byte[] imageCropResult = imageCrop(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"),
+        byte[] imageCropResult = imageProcessor.imageCrop(fileToByte(PATH_TO_IMAGES_TEST + "/1-bmp/file.bmp"),
                 200,
                 200,
                 300,
