@@ -9,6 +9,7 @@ public enum ImageType {
     PNG(true, "Portable Network Graphics"),
     JPEG(true, "Joint Photographic Experts Group"),
     JPG(true, "Joint Photographic Experts Group"),
+    TIF(false, "Tag Image File"),
     TIFF(false, "Tag Image File Format"),
     PSD(false, "Photoshop Document"),
     SVG(false, "Scalable Vector Graphics"),
