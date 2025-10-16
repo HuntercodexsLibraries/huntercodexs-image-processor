@@ -20,6 +20,7 @@
 
 	<dependencies>
 
+		<!--LOMBOK-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -38,6 +39,7 @@
 			<version>1.5.18</version>
 		</dependency>
 
+		<!--OTHERS-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
