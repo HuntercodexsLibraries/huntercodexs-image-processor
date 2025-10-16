@@ -1208,7 +1208,7 @@ class ImageProcessorTests {
         this.model.setFragments(imageProcessorFragment);
         this.imageProcessor = new ImageProcessor(this.model);
 
-        assertTrue(imageProcessor.imageFragment().matches("[0-9a-z]{32}_[a-z]{3,4}"));
+        assertTrue(imageProcessor.imageFragment().matches("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}_[a-z]{3,4}"));
 
         imageProcessorFragment.setImage(fileToByte(PATH_TO_IMAGES_TEST + "/5-jpg/file1.jpg"));
         imageProcessorFragment.setPath(PATH_TO_TMP_TEST);
@@ -1216,7 +1216,7 @@ class ImageProcessorTests {
         this.model.setFragments(imageProcessorFragment);
         this.imageProcessor = new ImageProcessor(this.model);
 
-        assertTrue(imageProcessor.imageFragment().matches("[0-9a-z]{32}_[a-z]{3,4}"));
+        assertTrue(imageProcessor.imageFragment().matches("[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}_[a-z]{3,4}"));
     }
 
     @Test

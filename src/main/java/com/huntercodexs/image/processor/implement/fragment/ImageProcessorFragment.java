@@ -1,19 +1,18 @@
 package com.huntercodexs.image.processor.implement.fragment;
 
-import com.huntercodexs.image.processor.implement.ProcessorFragment;
-import com.huntercodexs.image.processor.implement.convert.ImageProcessorConverter;
 import com.huntercodexs.image.processor.contract.ImageProcessorContract;
 import com.huntercodexs.image.processor.contract.item.ImageProcessorByte;
 import com.huntercodexs.image.processor.contract.item.ImageProcessorMatrix;
-import com.huntercodexs.image.processor.resource.ImageFileWriter;
+import com.huntercodexs.image.processor.implement.ProcessorFragment;
+import com.huntercodexs.image.processor.implement.convert.ImageProcessorConverter;
 import com.huntercodexs.image.processor.resource.ImageComplement;
+import com.huntercodexs.image.processor.resource.ImageFileWriter;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,14 +26,13 @@ public class ImageProcessorFragment extends ImageComplement implements Processor
 
     @Override
     public String fragment() {
-        Date date = new Date();
         com.huntercodexs.image.processor.contract.item.ImageProcessorFragment fragment = this.imageProcessorContract.getFragments();
 
         ImageProcessorConverter imageProcessorConverter = new ImageProcessorConverter(this.imageProcessorContract);
 
         setImageByte(fragment.getImage());
         String imageType = imageProcessorConverter.imageTypeFromBytesExtractor().toLowerCase();
-        String folderName = md5(String.valueOf(date.getTime()))+"_"+imageType;
+        String folderName = randomId()+"_"+imageType;
 
         String point = "";
         if (fragment.getPath().startsWith(".")) {

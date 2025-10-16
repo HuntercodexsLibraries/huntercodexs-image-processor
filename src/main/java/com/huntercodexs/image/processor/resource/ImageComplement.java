@@ -1,9 +1,7 @@
 package com.huntercodexs.image.processor.resource;
 
 import com.huntercodexs.image.processor.enumerator.ImageType;
-import lombok.Data;
 import org.apache.commons.io.IOUtils;
-import org.springframework.util.DigestUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -18,15 +16,15 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.UUID;
 
 import static com.huntercodexs.image.processor.constants.ImageProcessorConstants.ITERATION_COUNT;
 import static com.huntercodexs.image.processor.constants.ImageProcessorConstants.KEY_LENGTH;
 
-@Data
 public abstract class ImageComplement {
 
-    protected static String md5(String data){
-        return DigestUtils.md5DigestAsHex(data.getBytes());
+    protected static String randomId() {
+        return UUID.randomUUID().toString();
     }
 
     protected static String encryptAesCbc256(String strToEncrypt, String secretKey, String salt) {
